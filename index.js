@@ -7,12 +7,9 @@ const ObjectId = require('mongodb').ObjectId;
 const app = express();
 const port = 5000;
 
-
 //middlewire
 app.use(cors());
 app.use(express.json());
-
-
 
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.vwgx4.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
@@ -64,6 +61,17 @@ async function run() {
             } else {
                 res.send(orders);
             }
+        })
+
+        //delete api
+
+        app.delete('/rides/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const result = await ordersCollection.deleteOne(query);
+            res.send(result);
+            console.log(query);
+
         })
 
         // app.post('/products/byKeys', async (req, res) => {
