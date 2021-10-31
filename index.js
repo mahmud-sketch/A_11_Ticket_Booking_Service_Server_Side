@@ -50,6 +50,13 @@ async function run() {
             res.json(result);
         })
 
+        app.post('/allrides', async (req, res) => {
+            const ride = req.body;
+            const result = await ridesCollection.insertOne(ride);
+            // console.log('hitting the post', service);
+            res.send(result);
+        })
+
         app.get('/orders', async (req, res) => {
             // console.log(req.query);
             const search = req.query.email;
@@ -70,7 +77,7 @@ async function run() {
             const query = { _id: ObjectId(id) };
             const result = await ordersCollection.deleteOne(query);
             res.send(result);
-            console.log(query);
+
 
         })
 
